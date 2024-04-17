@@ -5,7 +5,7 @@ export default function Home() {
     <main
       style={{
         backgroundImage:
-          'url("https://images.pexels.com/photos/16567039/pexels-photo-16567039/free-photo-of-silhouette-of-electricity-post.jpeg?auto=compress&cs=tinysrgb&w=4160&h=4160&dpr=1")',
+          'url("https://images.unsplash.com/photo-1712403235961-3d0a14d8e33b?q=80&w=1465&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
       }}
       className="min-h-screen bg-center bg-cover flex flex-col justify-center items-center"
     >

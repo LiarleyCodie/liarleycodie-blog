@@ -1,102 +1,114 @@
 'use client'
 
-import burgerMenuIcon from '@/app/ui/images/burger-menu-icon.svg'
 import githubLogo from '@/app/ui/images/github-logo 1.svg'
-import instagramLogo from '@/app/ui/images/instagram-logo 1.svg'
-import xLogo from '@/app/ui/images/x-logo 1.svg'
-import lyiarGreenLogo from '@/app/ui/images/liarleycodie-green-logo.svg'
-import closeNavIcon from '@/app/ui/images/close-nav-icon.svg'
 import moonIcon from '@/app/ui/images/moon-icon.svg'
-
+import burgerMenuIcon from '@/app/ui/images/burger-menu-icon.svg'
+import closeNavIcon from '@/app/ui/images/close-nav-icon.svg'
+import sunIcon from '@/app/ui/images/sun-icon.svg'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-
-import '@/app/ui/navbar.css'
+import { useEffect, useState } from 'react'
+import { useTheme } from 'next-themes'
 
 export default function Navbar() {
-  const pathname = usePathname()
-  const isUserCurrentlyInIndex = pathname == '/'
+  const [navbarVisibility, setNavbarVisibility] = useState<
+    'hidden' | 'visible'
+  >('hidden')
+
+  function handleNavbarVisibility() {
+    if (navbarVisibility == 'visible') setNavbarVisibility('hidden')
+    else setNavbarVisibility('visible')
+  }
+
+  const { theme, setTheme } = useTheme()
+  useEffect(() => {
+    const currentTheme = localStorage.getItem('theme')
+    if (currentTheme) setTheme(currentTheme)
+  }, [])
+
+  function handleToggleTheme() {
+    const newTheme = theme === 'dark' ? 'light' : 'dark'
+    setTheme(newTheme)
+    localStorage.setItem('theme', newTheme)
+  }
 
   return (
-    <header className="absolute z-10 bg-red-500 w-full h-full sm:h-auto items-center px-20 grid grid-cols-[auto_2fr] sm:min-h-44">
-      <a
-        className={`hover:opacity-100 ${isUserCurrentlyInIndex ? 'opacity-100' : 'opacity-50'}`}
-        href="#"
+    <header className="h-20 absolute left-0 top-0 w-full bg-black">
+      <button
+        className="mt-6 sm:hidden z-30 absolute left-1/2 top-0 -translate-x-1/2"
+        onClick={handleNavbarVisibility}
       >
-        <Image src={lyiarGreenLogo} alt="" />
-      </a>
-      <input id="side-menu-button" type="checkbox" className="hidden" />
-      <label
-        htmlFor="side-menu-button"
-        id="navbar-label"
-        className="left-1/2 top-0 mt-8 -translate-x-1/2 sm:hidden absolute z-30"
-      >
-        <Image className="open-icon" src={burgerMenuIcon} alt="" />
-        <Image id="close-icon" className="hidden" src={closeNavIcon} alt="" />
-      </label>
-
-      <nav
-        id="nav-menu"
-        className="-translate-x-full bg-stone-200 text-stone-950 sm:text-stone-200 sm:bg-transparent py-12 sm:p-0 top-0 left-0 absolute w-full h-full sm:h-auto sm:relative flex-col  flex items-center justify-between sm:flex-row"
-      >
-        <ul className="flex-col items-center text-3xl sm:text-base sm:flex-row flex  sm:flex-auto  justify-center text-center gap-3 sm:gap-0 mt-14 sm:mt-0">
-          <li className="w-full sm:w-auto">
-            <a
-              className={`block w-full sm:w-auto  hover:opacity-100 px-3 py-2 ${isUserCurrentlyInIndex ? 'opacity-100' : 'opacity-50'}`}
-              href="#"
-            >
-              MAIN
-            </a>
+        {navbarVisibility == 'visible' ? (
+          <Image src={closeNavIcon} alt="" className="dark:invert" />
+        ) : (
+          <Image src={burgerMenuIcon} alt="" />
+        )}
+      </button>
+      <nav className="z-10 py-14 sm:py-0 sm:relative absolute w-full bg-stone-200 dark:bg-stone-900 flex flex-col sm:flex-row justify-between items-center h-screen sm:h-full px-10">
+        <a href="/">LOGO</a>
+        {/* items */}
+        <ul className="flex sm:flex-row flex-col gap-2 text-center">
+          <li className="w-full">
+            <NavItem path="/">Main</NavItem>
           </li>
-          <li className="w-full sm:w-auto">
-            <a
-              className="block w-full sm:w-auto opacity-50 hover:opacity-100 px-3 py-2"
-              href="#"
-            >
-              POSTS
-            </a>
+          <li className="w-full">
+            <NavItem path="/">Posts</NavItem>
           </li>
-          <li className="w-full sm:w-auto">
-            <a
-              className="block w-full sm:w-auto opacity-50 hover:opacity-100 px-3 py-2"
-              href="#"
-            >
-              ABOUT ME
-            </a>
+          <li className="w-full">
+            <NavItem path="/">About me</NavItem>
           </li>
-          <li className="w-full sm:w-auto">
-            <a
-              className="block w-full sm:w-auto opacity-50 hover:opacity-100 px-3 py-2"
-              href="#"
-            >
-              CONTACT ME
-            </a>
+          <li className="w-full">
+            <NavItem path="/">Contact me</NavItem>
           </li>
         </ul>
-
-        <ul className="flex gap-2 sm:flex-none items-center sm:filter-none invert">
+        {/* socials */}
+        <ul className="sm:flex gap-2 grid grid-cols-[repeat(3,auto)] grid-rows-[repeat(2,auto)]">
           <li>
-            <a className="opacity-50 hover:opacity-100 h-12 w-12" href="#">
-              <Image src={githubLogo} alt="" />
+            <a className="bg-red-500/20 justify-center flex h-8 w-8" href="#">
+              <Image src={githubLogo} width={26} alt="" />
             </a>
           </li>
           <li>
-            <a className="opacity-50 hover:opacity-100 h-12 w-12" href="#">
-              <Image src={instagramLogo} alt="" />
+            <a className="bg-red-500/20 justify-center flex h-8 w-8" href="#">
+              <Image src={githubLogo} width={26} alt="" />
             </a>
           </li>
           <li>
-            <a className="opacity-50 hover:opacity-100 h-12 w-12" href="#">
-              <Image src={xLogo} alt="" />
+            <a className="bg-red-500/20 justify-center flex h-8 w-8" href="#">
+              <Image src={githubLogo} width={26} alt="" />
             </a>
           </li>
+          <button
+            className="col-span-3 flex bg-red-500/20 h-8 items-center"
+            onClick={handleToggleTheme}
+          >
+            <span>
+              <span className="flex dark:hidden items-center gap-1  h-7 px-2">
+                <span className="sm:hidden">Dark Mode</span>
+                <Image src={moonIcon} alt="" width={18} />
+              </span>
+              <span className="hidden dark:flex items-center gap-1 h-7 px-2">
+                <span className="sm:hidden">Light Mode</span>
+                <Image src={sunIcon} alt="" width={18} />
+              </span>
+            </span>
+          </button>
         </ul>
-        <button className="flex h-10 w-32 sm:hidden text-sm items-center justify-center hover:bg-stone-800 bg-stone-950 text-stone-200 mb-4 sm:mb-0 border border-stone-500">
-          <span className="flex sm:hidden justify-center items-center gap-2">
-            Dark Mode <Image src={moonIcon} alt="" />
-          </span>
-        </button>
       </nav>
     </header>
+  )
+}
+
+interface INavItemProps {
+  children: React.ReactNode
+  path: string
+}
+function NavItem({ path, children }: INavItemProps) {
+  return (
+    <a
+      className="bg-red-500/20 px-2 sm:text-base text-4xl justify-center py-2 flex w-full"
+      href={path}
+    >
+      {children}
+    </a>
   )
 }
