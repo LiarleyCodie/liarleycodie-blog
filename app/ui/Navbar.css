@@ -1,0 +1,11 @@
+#side-menu-button[type="checkbox"]:checked ~ #navbar-label .open-icon  {
+  display: none; visibility: hidden;
+}
+
+#side-menu-button[type="checkbox"]:checked ~ #navbar-label #close-icon  {
+  display: block; visibility: visible;
+}
+
+#side-menu-button[type="checkbox"]:checked ~ #nav-menu {
+  transform: translateX(0);
+}
