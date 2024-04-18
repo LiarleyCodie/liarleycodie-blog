@@ -51,7 +51,7 @@ export default function Navbar() {
   return (
     <header className="h-20 fixed z-10 left-0 top-0 w-full">
       <button
-        className="mt-6 sm:hidden z-30 absolute left-1/2 top-0 -translate-x-1/2"
+        className="mt-6 md:hidden z-30 absolute left-1/2 top-0 -translate-x-1/2"
         onClick={handleNavbarVisibility}
       >
         {navbarVisibility == 'visible' ? (
@@ -61,16 +61,16 @@ export default function Navbar() {
         )}
       </button>
       <nav
-        className={`${navbarVisibility == 'visible' ? 'translate-x-0' : '-translate-x-full'} z-10 py-14 sm:py-0 sm:relative absolute w-full bg-gray-200 dark:bg-gray-900  flex flex-col sm:flex-row justify-between items-center h-screen sm:h-full px-10 duration-300 sm:translate-x-0`}
+        className={`${navbarVisibility == 'visible' ? 'translate-x-0' : '-translate-x-full'} z-10 py-14 md:py-0 md:relative absolute w-full bg-gray-200 dark:bg-gray-900  flex flex-col md:flex-row justify-between items-center h-screen md:h-full px-10 duration-300 md:translate-x-0`}
       >
         <a
           href="/"
-          className="h-8 dark:filter-none invert order-1 sm:order-none"
+          className="h-8 dark:filter-none invert order-1 md:order-none"
         >
           <Image src={lyiarLogo} alt="" style={{ height: '100%' }} />
         </a>
         {/* items */}
-        <ul className="flex sm:flex-row flex-col items-center gap-5 text-center mt-12 sm:mt-0">
+        <ul className="flex ml-0 md:ml-28 md:flex-row flex-col items-center gap-5 text-center mt-12 md:mt-0">
           <li className="w-full">
             <NavItem currentPath={currentPath} path="/">
               Main
@@ -88,60 +88,60 @@ export default function Navbar() {
           </li>
         </ul>
         {/* socials */}
-        <ul className="sm:flex items-center gap-2 grid grid-cols-[repeat(3,auto)] grid-rows-[repeat(2,auto)]">
+        <ul className="md:flex items-center gap-2 grid grid-cols-[repeat(3,auto)] grid-rows-[repeat(2,auto)]">
           <li>
             <a
-              className="opacity-50 hover:opacity-100 justify-center flex h-8 w-8"
+              className="opacity-50 duration-200 items-center hover:opacity-100 justify-center flex h-8 w-8"
               href="https://github.com/LiarleyCodie"
               target="_blank"
             >
               <Image
-                className="dark:filter-none invert"
+                className="dark:filter-none md:h-6 invert"
                 src={githubLogo}
-                width={20}
+                style={{ width: '100%' }}
                 alt=""
               />
             </a>
           </li>
           <li>
             <a
-              className="opacity-50 hover:opacity-100 justify-center flex h-8 w-8"
+              className="opacity-50 duration-200 mx-4 md:mx-0 items-center hover:opacity-100 justify-center flex h-8 w-8"
               href="https://www.instagram.com/liarleycodie/"
               target="_blank"
             >
               <Image
-                className="dark:filter-none invert"
+                className="dark:filter-none md:h-6 invert"
                 src={instagramLogo}
-                width={20}
+                style={{ width: '100%' }}
                 alt=""
               />
             </a>
           </li>
           <li>
             <a
-              className="opacity-50 hover:opacity-100 justify-center flex h-8 w-8"
+              className="opacity-50 duration-200 items-center hover:opacity-100 justify-center flex h-8 w-8"
               href="https://twitter.com/liarleycodie"
               target="_blank"
             >
               <Image
-                className="dark:filter-none invert"
+                className="dark:filter-none md:h-6 invert"
                 src={xwitterLogo}
-                width={20}
+                style={{ width: '100%' }}
                 alt=""
               />
             </a>
           </li>
           <button
-            className="col-span-3 flex h-9 items-center mt-8 sm:mt-0 bg-gray-800 border-stone-900 dark:bg-gray-300 border dark:border-stone-100 text-sm"
+            className="col-span-3 justify-center flex h-9 ml-0 md:ml-2 items-center mt-8 md:mt-0 bg-gray-800 border-stone-900 dark:bg-gray-300 border duration-200 dark:border-stone-100 text-sm hover:bg-gray-700 dark:hover:bg-gray-400"
             onClick={handleToggleTheme}
           >
             <span>
               <span className="flex dark:hidden items-center font-medium gap-1  h-7 px-2">
-                <span className="sm:hidden">Dark Mode</span>
+                <span className="md:hidden">Dark Mode</span>
                 <Image src={moonIcon} alt="" width={18} />
               </span>
               <span className="hidden dark:flex items-center gap-1 h-7 px-2">
-                <span className="sm:hidden text-stone-900">Light Mode</span>
+                <span className="md:hidden text-stone-900">Light Mode</span>
                 <Image src={sunIcon} alt="" width={18} />
               </span>
             </span>
@@ -160,7 +160,7 @@ interface INavItemProps {
 function NavItem({ path, currentPath, children }: INavItemProps) {
   return (
     <a
-      className={`text-nowrap text-stone-900 dark:text-stone-200 px-2 sm:text-sm text-4xl justify-center py-2 flex w-full ${currentPath == path ? 'opacity-100' : 'opacity-50'} hover:opacity-100`}
+      className={`text-nowrap text-stone-900 dark:text-stone-200 px-2 md:text-sm text-4xl justify-center py-2 flex w-full ${currentPath == path ? 'opacity-100' : 'opacity-50'} hover:opacity-100 duration-200`}
       href={path}
     >
       {children}

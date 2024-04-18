@@ -9,7 +9,7 @@ const config: Config = {
   darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
     extend: {
-
+     
     },
   },
   plugins: [],
