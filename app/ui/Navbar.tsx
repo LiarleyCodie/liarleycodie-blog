@@ -1,18 +1,31 @@
 'use client'
 
-import githubLogo from '@/app/ui/images/github-logo 1.svg'
+import githubLogo from '@/app/ui/images/github-logo.svg'
+import instagramLogo from '@/app/ui/images/instagram-logo.svg'
+import xwitterLogo from '@/app/ui/images/x-logo.svg'
 import moonIcon from '@/app/ui/images/moon-icon.svg'
+import lyiarLogo from '@/app/ui/images/liarleycodie-logo.svg'
 import burgerMenuIcon from '@/app/ui/images/burger-menu-icon.svg'
 import closeNavIcon from '@/app/ui/images/close-nav-icon.svg'
 import sunIcon from '@/app/ui/images/sun-icon.svg'
 import Image from 'next/image'
+
 import { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes'
+import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
+  const currentPath = usePathname()
+
   const [navbarVisibility, setNavbarVisibility] = useState<
     'hidden' | 'visible'
   >('hidden')
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  const handleScroll = () => {
+    if (window.scrollY > 50) setIsScrolled(true)
+    else setIsScrolled(false)
+  }
 
   function handleNavbarVisibility() {
     if (navbarVisibility == 'visible') setNavbarVisibility('hidden')
@@ -21,8 +34,12 @@ export default function Navbar() {
 
   const { theme, setTheme } = useTheme()
   useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+
     const currentTheme = localStorage.getItem('theme')
     if (currentTheme) setTheme(currentTheme)
+
+      return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   function handleToggleTheme() {
@@ -32,7 +49,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="h-20 absolute left-0 top-0 w-full bg-black">
+    <header className="h-20 fixed z-10 left-0 top-0 w-full">
       <button
         className="mt-6 sm:hidden z-30 absolute left-1/2 top-0 -translate-x-1/2"
         onClick={handleNavbarVisibility}
@@ -43,51 +60,87 @@ export default function Navbar() {
           <Image src={burgerMenuIcon} alt="" />
         )}
       </button>
-      <nav className="z-10 py-14 sm:py-0 sm:relative absolute w-full bg-stone-200 dark:bg-stone-900 flex flex-col sm:flex-row justify-between items-center h-screen sm:h-full px-10">
-        <a href="/">LOGO</a>
+      <nav
+        className={`${navbarVisibility == 'visible' ? 'translate-x-0' : '-translate-x-full'} z-10 py-14 sm:py-0 sm:relative absolute w-full bg-stone-200 dark:bg-stone-900  flex flex-col sm:flex-row justify-between items-center h-screen sm:h-full px-10 duration-300 sm:translate-x-0`}
+      >
+        <a href="/" className="h-8 dark:filter-none invert">
+          <Image src={lyiarLogo} alt="" style={{ height: '100%' }} />
+        </a>
         {/* items */}
-        <ul className="flex sm:flex-row flex-col gap-2 text-center">
+        <ul className="flex sm:flex-row flex-col items-center gap-2 text-center">
           <li className="w-full">
-            <NavItem path="/">Main</NavItem>
+            <NavItem currentPath={currentPath} path="/">
+              Main
+            </NavItem>
           </li>
           <li className="w-full">
-            <NavItem path="/">Posts</NavItem>
+            <NavItem currentPath={currentPath} path="/posts">
+              Posts
+            </NavItem>
           </li>
           <li className="w-full">
-            <NavItem path="/">About me</NavItem>
+            <NavItem currentPath={currentPath} path="/aboutme">
+              About me
+            </NavItem>
           </li>
           <li className="w-full">
-            <NavItem path="/">Contact me</NavItem>
+            <NavItem currentPath={currentPath} path="/contactme">
+              Contact me
+            </NavItem>
           </li>
         </ul>
         {/* socials */}
-        <ul className="sm:flex gap-2 grid grid-cols-[repeat(3,auto)] grid-rows-[repeat(2,auto)]">
+        <ul className="sm:flex items-center gap-2 grid grid-cols-[repeat(3,auto)] grid-rows-[repeat(2,auto)]">
           <li>
-            <a className="bg-red-500/20 justify-center flex h-8 w-8" href="#">
-              <Image src={githubLogo} width={26} alt="" />
+            <a
+              className="opacity-50 hover:opacity-100 justify-center flex h-8 w-8"
+              href="#"
+            >
+              <Image
+                className="dark:filter-none invert"
+                src={githubLogo}
+                width={20}
+                alt=""
+              />
             </a>
           </li>
           <li>
-            <a className="bg-red-500/20 justify-center flex h-8 w-8" href="#">
-              <Image src={githubLogo} width={26} alt="" />
+            <a
+              className="opacity-50 hover:opacity-100 justify-center flex h-8 w-8"
+              href="#"
+            >
+              <Image
+                className="dark:filter-none invert"
+                src={instagramLogo}
+                width={20}
+                alt=""
+              />
             </a>
           </li>
           <li>
-            <a className="bg-red-500/20 justify-center flex h-8 w-8" href="#">
-              <Image src={githubLogo} width={26} alt="" />
+            <a
+              className="opacity-50 hover:opacity-100 justify-center flex h-8 w-8"
+              href="#"
+            >
+              <Image
+                className="dark:filter-none invert"
+                src={xwitterLogo}
+                width={20}
+                alt=""
+              />
             </a>
           </li>
           <button
-            className="col-span-3 flex bg-red-500/20 h-8 items-center"
+            className="col-span-3 flex h-9 items-center mt-8 sm:mt-0 bg-stone-800 border-stone-900 dark:bg-stone-300 border dark:border-stone-100 text-sm"
             onClick={handleToggleTheme}
           >
             <span>
-              <span className="flex dark:hidden items-center gap-1  h-7 px-2">
+              <span className="flex dark:hidden items-center font-medium gap-1  h-7 px-2">
                 <span className="sm:hidden">Dark Mode</span>
                 <Image src={moonIcon} alt="" width={18} />
               </span>
               <span className="hidden dark:flex items-center gap-1 h-7 px-2">
-                <span className="sm:hidden">Light Mode</span>
+                <span className="sm:hidden text-stone-900">Light Mode</span>
                 <Image src={sunIcon} alt="" width={18} />
               </span>
             </span>
@@ -101,11 +154,12 @@ export default function Navbar() {
 interface INavItemProps {
   children: React.ReactNode
   path: string
+  currentPath: string
 }
-function NavItem({ path, children }: INavItemProps) {
+function NavItem({ path, currentPath, children }: INavItemProps) {
   return (
     <a
-      className="bg-red-500/20 px-2 sm:text-base text-4xl justify-center py-2 flex w-full"
+      className={`text-nowrap text-stone-900 dark:text-stone-200 px-2 sm:text-sm text-4xl justify-center py-2 flex w-full ${currentPath == path ? 'opacity-100' : 'opacity-50'} hover:opacity-100`}
       href={path}
     >
       {children}
