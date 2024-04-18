@@ -20,12 +20,12 @@ export default function Navbar() {
   const [navbarVisibility, setNavbarVisibility] = useState<
     'hidden' | 'visible'
   >('hidden')
-  const [isScrolled, setIsScrolled] = useState(false)
+  // const [isScrolled, setIsScrolled] = useState(false)
 
-  const handleScroll = () => {
-    if (window.scrollY > 50) setIsScrolled(true)
-    else setIsScrolled(false)
-  }
+  // const handleScroll = () => {
+  //   if (window.scrollY > 50) setIsScrolled(true)
+  //   else setIsScrolled(false)
+  // }
 
   function handleNavbarVisibility() {
     if (navbarVisibility == 'visible') setNavbarVisibility('hidden')
@@ -34,12 +34,12 @@ export default function Navbar() {
 
   const { theme, setTheme } = useTheme()
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
+    // window.addEventListener('scroll', handleScroll)
 
     const currentTheme = localStorage.getItem('theme')
     if (currentTheme) setTheme(currentTheme)
 
-      return () => window.removeEventListener('scroll', handleScroll)
+    // return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   function handleToggleTheme() {
@@ -61,21 +61,19 @@ export default function Navbar() {
         )}
       </button>
       <nav
-        className={`${navbarVisibility == 'visible' ? 'translate-x-0' : '-translate-x-full'} z-10 py-14 sm:py-0 sm:relative absolute w-full bg-stone-200 dark:bg-stone-900  flex flex-col sm:flex-row justify-between items-center h-screen sm:h-full px-10 duration-300 sm:translate-x-0`}
+        className={`${navbarVisibility == 'visible' ? 'translate-x-0' : '-translate-x-full'} z-10 py-14 sm:py-0 sm:relative absolute w-full bg-gray-200 dark:bg-gray-900  flex flex-col sm:flex-row justify-between items-center h-screen sm:h-full px-10 duration-300 sm:translate-x-0`}
       >
-        <a href="/" className="h-8 dark:filter-none invert">
+        <a
+          href="/"
+          className="h-8 dark:filter-none invert order-1 sm:order-none"
+        >
           <Image src={lyiarLogo} alt="" style={{ height: '100%' }} />
         </a>
         {/* items */}
-        <ul className="flex sm:flex-row flex-col items-center gap-2 text-center">
+        <ul className="flex sm:flex-row flex-col items-center gap-5 text-center mt-12 sm:mt-0">
           <li className="w-full">
             <NavItem currentPath={currentPath} path="/">
               Main
-            </NavItem>
-          </li>
-          <li className="w-full">
-            <NavItem currentPath={currentPath} path="/posts">
-              Posts
             </NavItem>
           </li>
           <li className="w-full">
@@ -94,7 +92,8 @@ export default function Navbar() {
           <li>
             <a
               className="opacity-50 hover:opacity-100 justify-center flex h-8 w-8"
-              href="#"
+              href="https://github.com/LiarleyCodie"
+              target="_blank"
             >
               <Image
                 className="dark:filter-none invert"
@@ -107,7 +106,8 @@ export default function Navbar() {
           <li>
             <a
               className="opacity-50 hover:opacity-100 justify-center flex h-8 w-8"
-              href="#"
+              href="https://www.instagram.com/liarleycodie/"
+              target="_blank"
             >
               <Image
                 className="dark:filter-none invert"
@@ -120,7 +120,8 @@ export default function Navbar() {
           <li>
             <a
               className="opacity-50 hover:opacity-100 justify-center flex h-8 w-8"
-              href="#"
+              href="https://twitter.com/liarleycodie"
+              target="_blank"
             >
               <Image
                 className="dark:filter-none invert"
@@ -131,7 +132,7 @@ export default function Navbar() {
             </a>
           </li>
           <button
-            className="col-span-3 flex h-9 items-center mt-8 sm:mt-0 bg-stone-800 border-stone-900 dark:bg-stone-300 border dark:border-stone-100 text-sm"
+            className="col-span-3 flex h-9 items-center mt-8 sm:mt-0 bg-gray-800 border-stone-900 dark:bg-gray-300 border dark:border-stone-100 text-sm"
             onClick={handleToggleTheme}
           >
             <span>
