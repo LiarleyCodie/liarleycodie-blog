@@ -1,0 +1,10 @@
+.recentHighlight {
+  box-shadow: 0 0 0 .6rem #6366f177;
+  animation: hueSliding 3s linear infinite;
+}
+
+@keyframes hueSliding {
+  50% {
+    box-shadow: 0 0 0 0 #6366f177;
+  }
+}

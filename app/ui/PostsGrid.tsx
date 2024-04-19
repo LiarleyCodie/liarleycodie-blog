@@ -7,7 +7,7 @@ export default function PostsGrid() {
         <PostCard
           publishedInDays={5403}
           tags={['Hardware', 'Potato', 'Apple II', 'PC', 'CPU']}
-          href="#"
+          href="/post/1"
           recent
         >
           The relation between wall clocks and processors
@@ -15,21 +15,21 @@ export default function PostsGrid() {
         <PostCard
           publishedInDays={5403}
           tags={['Hardware', 'Potato', 'Apple II', 'PC', 'CPU']}
-          href="#"
+          href="/post/22"
         >
           The relation between wall clocks and processors
         </PostCard>
         <PostCard
           publishedInDays={5403}
           tags={['Hardware', 'Potato', 'Apple II', 'PC', 'CPU']}
-          href="#"
+          href="/post/333"
         >
           The relation between wall clocks and processors
         </PostCard>
         <PostCard
           publishedInDays={5403}
           tags={['Hardware', 'Potato', 'Apple II', 'PC', 'CPU']}
-          href="#"
+          href="/post/4444"
         >
           The relation between wall clocks and processors
         </PostCard>
