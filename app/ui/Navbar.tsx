@@ -65,7 +65,7 @@ export default function Navbar() {
         )}
       </button>
       <nav
-        className={`${navbarVisibility == 'visible' ? 'translate-x-0' : '-translate-x-full'} z-10 py-14 md:py-0 md:relative absolute w-full bg-gray-200 dark:bg-gray-900  flex flex-col md:flex-row justify-between items-center h-screen md:h-full px-10 duration-300 md:translate-x-0`}
+        className={`${navbarVisibility == 'visible' ? 'translate-x-0' : '-translate-x-full'} z-10 py-14 md:py-0 md:relative absolute w-full bg-gray-200 dark:bg-gray-900  flex flex-col md:flex-row justify-between items-center h-screen md:h-full px-10 duration-200 md:translate-x-0`}
       >
         <a
           href="/"

@@ -4,7 +4,7 @@ import { Poppins } from 'next/font/google'
 import Navbar from './ui/Navbar'
 import './globals.css'
 
-const poppins = Poppins({ weight: ['500', '400', '200'], subsets: ['latin'] })
+const poppins = Poppins({ weight: ['500', '400', '200', '300'], subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'LiarleyCodie',

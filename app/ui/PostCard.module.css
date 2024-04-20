@@ -3,8 +3,21 @@
   animation: hueSliding 3s linear infinite;
 }
 
+.starDoABarrelRoll {
+  animation: doABarrelRoll 3s infinite;
+}
+
 @keyframes hueSliding {
   50% {
     box-shadow: 0 0 0 0 #6366f177;
+  }
+}
+
+@keyframes doABarrelRoll {
+  70% {
+    transform: rotateZ(360deg) scale(1.5);
+  }
+  to {
+    transform: rotateZ(360deg);
   }
 }
