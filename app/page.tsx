@@ -2,9 +2,17 @@ import searchIcon from '@/app/ui/images/search-icon.svg'
 import Image from 'next/image'
 import PostsGrid from './ui/PostsGrid'
 
-export default function Home() {
+interface IHomeProps {
+  params: {}
+  searchParams: { [id: string]: string }
+}
+
+export default function Home(params: IHomeProps) {
+  console.log(params)
+
   return (
     <main className="min-h-screen items-center gap-16 flex flex-col bg-gray-200 dark:bg-gray-950">
+      {/* heading */}
       <div
         style={{
           backgroundImage:
@@ -18,7 +26,8 @@ export default function Home() {
             <strong>Welcome my friend!</strong>
           </h1>
 
-          <div className="border focus-within:border-stone-200 focus-within:outline-stone-200/30 outline outline-4 outline-stone-200/0 border-stone-400 bg-gray-200/5 rounded-full flex w-full max-w-xl duration-200">
+          {/* search bar */}
+          <div className="border focus-within:border-gray-200 focus-within:outline-gray-200/30 outline outline-4 outline-gray-200/0 border-gray-400 bg-gray-200/5 rounded-full flex w-full max-w-xl duration-200">
             <input
               type="search"
               autoComplete="off"
@@ -30,7 +39,10 @@ export default function Home() {
             </button>
           </div>
 
-          <p className="text-sm font-light text-stone-200/50 hover:text-stone-200 duration-200">
+          <p
+            className="text-sm font-light text-gray-200/50 hover:text-gray-200 duration-200"
+            style={{ textShadow: '0 0 3px #00000077' }}
+          >
             Photo by{' '}
             <a
               target="_blank"
@@ -50,6 +62,7 @@ export default function Home() {
           </p>
         </div>
       </div>
+
       <PostsGrid />
     </main>
   )

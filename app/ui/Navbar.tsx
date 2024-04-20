@@ -1,13 +1,17 @@
 'use client'
 
-import githubLogo from '@/app/ui/images/github-logo.svg'
-import instagramLogo from '@/app/ui/images/instagram-logo.svg'
-import xwitterLogo from '@/app/ui/images/x-logo.svg'
-import moonIcon from '@/app/ui/images/moon-icon.svg'
 import lyiarLogo from '@/app/ui/images/liarleycodie-logo.svg'
 import burgerMenuIcon from '@/app/ui/images/burger-menu-icon.svg'
 import closeNavIcon from '@/app/ui/images/close-nav-icon.svg'
-import sunIcon from '@/app/ui/images/sun-icon.svg'
+import {
+  Sun,
+  MoonStars,
+  XLogo,
+  InstagramLogo,
+  GithubLogo,
+  List,
+  X
+} from '@phosphor-icons/react'
 import Image from 'next/image'
 
 import { useEffect, useState } from 'react'
@@ -20,12 +24,12 @@ export default function Navbar() {
   const [navbarVisibility, setNavbarVisibility] = useState<
     'hidden' | 'visible'
   >('hidden')
-  // const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
-  // const handleScroll = () => {
-  //   if (window.scrollY > 50) setIsScrolled(true)
-  //   else setIsScrolled(false)
-  // }
+  const handleScroll = () => {
+    if (window.scrollY > 100) setIsScrolled(true)
+    else setIsScrolled(false)
+  }
 
   function handleNavbarVisibility() {
     if (navbarVisibility == 'visible') setNavbarVisibility('hidden')
@@ -34,12 +38,12 @@ export default function Navbar() {
 
   const { theme, setTheme } = useTheme()
   useEffect(() => {
-    // window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll)
 
     const currentTheme = localStorage.getItem('theme')
     if (currentTheme) setTheme(currentTheme)
 
-    // return () => window.removeEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   function handleToggleTheme() {
@@ -51,13 +55,13 @@ export default function Navbar() {
   return (
     <header className="h-20 fixed z-10 left-0 top-0 w-full">
       <button
-        className="mt-6 md:hidden z-30 absolute left-1/2 top-0 -translate-x-1/2"
+        className={`mt-6 md:hidden z-30 absolute left-1/2 top-0 -translate-x-1/2 ${(isScrolled && navbarVisibility == 'hidden') ? 'bg-gray-900/20 p-2' : 'p-2'} duration-200`}
         onClick={handleNavbarVisibility}
       >
         {navbarVisibility == 'visible' ? (
-          <Image src={closeNavIcon} alt="" className="dark:invert" />
+          <X size={32} className='fill-gray-900 dark:fill-gray-200' />
         ) : (
-          <Image src={burgerMenuIcon} alt="" />
+          <List size={32} />
         )}
       </button>
       <nav
@@ -95,12 +99,7 @@ export default function Navbar() {
               href="https://github.com/LiarleyCodie"
               target="_blank"
             >
-              <Image
-                className="dark:filter-none md:h-6 invert"
-                src={githubLogo}
-                style={{ width: '100%' }}
-                alt=""
-              />
+              <GithubLogo className="fill-gray-900 dark:fill-gray-200 text-4xl md:text-2xl" />
             </a>
           </li>
           <li>
@@ -109,12 +108,7 @@ export default function Navbar() {
               href="https://www.instagram.com/liarleycodie/"
               target="_blank"
             >
-              <Image
-                className="dark:filter-none md:h-6 invert"
-                src={instagramLogo}
-                style={{ width: '100%' }}
-                alt=""
-              />
+              <InstagramLogo className="fill-gray-900 dark:fill-gray-200 text-4xl md:text-2xl" />
             </a>
           </li>
           <li>
@@ -123,26 +117,21 @@ export default function Navbar() {
               href="https://twitter.com/liarleycodie"
               target="_blank"
             >
-              <Image
-                className="dark:filter-none md:h-6 invert"
-                src={xwitterLogo}
-                style={{ width: '100%' }}
-                alt=""
-              />
+              <XLogo className="fill-gray-900 dark:fill-gray-200 text-4xl md:text-2xl" />
             </a>
           </li>
           <button
-            className="col-span-3 justify-center flex h-9 ml-0 md:ml-2 items-center mt-8 md:mt-0 bg-gray-800 border-stone-900 dark:bg-gray-300 border duration-200 dark:border-stone-100 text-sm hover:bg-gray-700 dark:hover:bg-gray-400"
+            className="col-span-3 justify-center flex h-9 ml-0 md:ml-2 items-center mt-10 md:mt-0 bg-gray-800 border-gray-900 dark:bg-gray-300 border duration-200 dark:border-gray-100 text-sm hover:bg-gray-700 dark:hover:bg-gray-400"
             onClick={handleToggleTheme}
           >
             <span>
               <span className="flex dark:hidden items-center font-medium gap-1  h-7 px-2">
                 <span className="md:hidden">Dark Mode</span>
-                <Image src={moonIcon} alt="" width={18} />
+                <MoonStars size={18} className="fill-gray-300" />
               </span>
               <span className="hidden dark:flex items-center gap-1 h-7 px-2">
-                <span className="md:hidden text-stone-900">Light Mode</span>
-                <Image src={sunIcon} alt="" width={18} />
+                <span className="md:hidden text-gray-900">Light Mode</span>
+                <Sun size={18} className="fill-gray-900" />
               </span>
             </span>
           </button>
@@ -160,7 +149,7 @@ interface INavItemProps {
 function NavItem({ path, currentPath, children }: INavItemProps) {
   return (
     <a
-      className={`text-nowrap text-stone-900 dark:text-stone-200 px-2 md:text-sm text-4xl justify-center py-2 flex w-full ${currentPath == path ? 'opacity-100' : 'opacity-50'} hover:opacity-100 duration-200`}
+      className={`text-nowrap text-gray-900 dark:text-gray-200 px-2 md:text-sm text-4xl justify-center py-2 flex w-full ${currentPath == path ? 'opacity-100' : 'opacity-50'} hover:opacity-100 duration-200`}
       href={path}
     >
       {children}
