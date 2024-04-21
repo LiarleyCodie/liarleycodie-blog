@@ -44,7 +44,7 @@ export default function Navbar() {
     if (currentTheme) setTheme(currentTheme)
 
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [setTheme])
 
   function handleToggleTheme() {
     const newTheme = theme === 'dark' ? 'light' : 'dark'

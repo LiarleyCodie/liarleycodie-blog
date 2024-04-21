@@ -1,6 +1,7 @@
 import searchIcon from '@/app/ui/images/search-icon.svg'
 import Image from 'next/image'
 import PostsGrid from './ui/PostsGrid'
+import PaginationControl from './ui/PaginationControl'
 
 interface IHomeProps {
   params: {}
@@ -11,7 +12,7 @@ export default function Home(params: IHomeProps) {
   console.log(params)
 
   return (
-    <main className="min-h-screen items-center gap-16 flex flex-col bg-gray-200 dark:bg-gray-950">
+    <main className="min-h-screen items-center gap-16 flex flex-col pb-[10rem] bg-gray-200 dark:bg-gray-950">
       {/* heading */}
       <div
         style={{
@@ -64,6 +65,7 @@ export default function Home(params: IHomeProps) {
       </div>
 
       <PostsGrid />
+      <PaginationControl />
     </main>
   )
 }
