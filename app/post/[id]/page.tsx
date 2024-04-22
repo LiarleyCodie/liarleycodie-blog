@@ -4,6 +4,7 @@ import PostBanner from '@/app/ui/post/PostBanner'
 import H2 from '@/app/ui/post/H2'
 import { Picture } from '@/app/ui/post/Picture'
 import DOMPurify from 'isomorphic-dompurify'
+// import { posts } from '@/mock-data/Posts'
 
 interface IProps {
   params: { id: string }
@@ -40,10 +41,12 @@ interface IPostData {
       text?: string
       href?: string
     }[]
+    list?: string[]
   }[]
 }
 
-const postData: IPostData = {
+// let postData: IPostData | null = null
+let postData: IPostData = {
   banner: {
     url: 'https://images.pexels.com/photos/2955704/pexels-photo-2955704.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1280&dpr=1',
     author: 'Dani Muchow',
@@ -54,81 +57,84 @@ const postData: IPostData = {
     icon_url: '/cpu.svg',
   },
   heading: {
-    title: 'The relation between wall clocks and processors',
-    publicationDate: 'April 19, 2024',
-    tags: ['Hardware', 'Potato', 'Apple II', 'PC', 'CPU'],
+    title: "What's Wrong With Assembly Language",
+    publicationDate: 'April 15, 1936',
+    tags: ['Hardware', 'ASM', 'Apple II', 'PC', 'CPU'],
   },
   content: [
-    { type: 'h2', text: 'What are States on React?' },
     {
-      type: 'p',
-      text: "In React, a component's state refers to objects that determine the component's behavior and how it renders in the interface.",
+      type: 'h2',
+      text: 'Assembly language has a pretty bad reputation',
     },
     {
       type: 'p',
-      text: 'States are essential for handling data that changes over time, such as user input, API responses, interaction events, and more.',
+      text: 'The common impression about assembly language programmers today is that they are all hackers or misguided individuals who need enlightenment.',
     },
     {
       type: 'p',
-      text: 'The main characteristic of state is that it is local and encapsulated within the component, that is, it is not directly accessible by other components unless it is passed explicitly.',
+      text: 'Here are the reasons people give for not using assembly:',
     },
     {
-      type: 'picture',
-      image: {
-        image_url:
-          'https://images.unsplash.com/photo-1713403955914-b938e1bd1b2f?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        image_alt: 'the golden gate bridge is silhouetted against the sunset',
-        image_author: 'Kellen Riggin',
-        image_original_url:
-          'https://unsplash.com/photos/the-golden-gate-bridge-is-silhouetted-against-the-sunset-To4-hsfiA3A',
-        provider_name: 'Unsplash',
-        provider_url: 'https://unsplash.com',
-      },
+      type: 'ul',
+      list: [
+        'Assembly is hard to learn.',
+        'Assembly is hard to read and understand.',
+        'Assembly is hard to debug.',
+        'Assembly is hard to maintain.',
+        'Assembly is hard to write.',
+        'Assembly language programming is time consuming.',
+        'Improved compiler technology has eliminated the need for assembly language.',
+        'Today, machines are so fast that we no longer need to use assembly.',
+        'If you need more speed, you should use a better algorithm rather than switch to assembly language.',
+        'Machines have so much memory today, saving space using assembly is not important.',
+        'Assembly language is not portable.',
+      ],
     },
-    { type: 'h2', text: 'Using useState with React' },
     {
-      type: 'p_a',
+      type: 'p_a_strong_em',
       content: [
-        { type: 'text', text: 'The ' },
-        { type: 'link', text: 'useState', href: '/' },
-        {
-          type: 'text',
-          text: " Hook is the simplest and most common way to add state to a functional component. Let's see how it can be implemented:",
-        },
+        { type: 'text', text: 'An ' },
+        { type: 'em', text: 'old joke' },
+        { type: 'strong', text: ' goes ' },
+        { type: 'link', text: 'something', href: '/' },
+        { type: 'text', text: ' like this' },
       ],
     },
   ],
 }
 
 export async function generateMetadata({ params, searchParams }: IProps) {
+  // postData = posts[params.id]
+
   return {
     title: postData.heading.title + ' | LiarleyCodie',
   }
 }
 
 export default async function Posts({ params }: IProps) {
-  const { id } = params
+  // postData = posts[params.id]
+
   return (
     <main className="flex flex-col items-center min-h-screen bg-gray-200 dark:bg-gray-950 text-gray-700 dark:text-gray-400">
       <PostBanner
-        author={postData.banner.author}
-        icon_url={postData.banner.icon_url}
-        original_url={postData.banner.original_url}
-        provider_name={postData.banner.provider_name}
-        provider_url={postData.banner.provider_url}
-        url={postData.banner.url}
+        author={postData?.banner.author ?? ''}
+        icon_url={postData?.banner.icon_url ?? ''}
+        original_url={postData?.banner.original_url ?? ''}
+        provider_name={postData?.banner.provider_name ?? ''}
+        provider_url={postData?.banner.provider_url ?? ''}
+        url={postData?.banner.url ?? ''}
       />
 
       <article className="mt-10 md:mt-20 mb-[30rem]  max-w-3xl w-full px-4 lg:px-0">
         <PostHeading
-          title={postData.heading.title}
-          publicationDate={postData.heading.publicationDate}
-          tags={postData.heading.tags}
+          title={postData?.heading.title ?? ''}
+          publicationDate={postData?.heading.publicationDate ?? ''}
+          tags={postData?.heading.tags ?? ['']}
         />
 
         {/* content */}
         <section className="mt-16 flex flex-col gap-4">
-          {postData.content &&
+          {postData?.content &&
             postData.content.map((content, i) => {
               const sanitizedText = DOMPurify.sanitize(content.text ?? '')
 
@@ -157,25 +163,46 @@ export default async function Posts({ params }: IProps) {
                   height={720}
                   width={720}
                 />
-              ) : content.type == 'p_a' ? (
+              ) : content.type == 'p_a_strong_em' ? (
                 <p
                   key={i}
                   className="leading-8 font-normal text-gray-700 dark:text-gray-400/80"
                 >
-                  {content?.content?.map((text, j) =>
-                    text.type == 'text' ? (
-                      DOMPurify.sanitize(text.text ?? '')
-                    ) : (
+                  {content?.content?.map((text, j) => {
+                    const anotherSanitizedText = DOMPurify.sanitize(
+                      text.text ?? '',
+                    )
+
+                    return text.type == 'text' ? (
+                      <React.Fragment key={j}>
+                        {anotherSanitizedText}
+                      </React.Fragment>
+                    ) : text.type == 'link' ? (
                       <a
                         key={j}
                         href={DOMPurify.sanitize(text.href ?? '')}
                         className="text-indigo-700 hover:text-indigo-500 dark:text-indigo-500 dark:hover:text-indigo-400"
                       >
-                        {DOMPurify.sanitize(text.text ?? '')}
+                        {anotherSanitizedText}
                       </a>
-                    ),
-                  )}
+                    ) : text.type == 'strong' ? (
+                      <strong key={j}>{anotherSanitizedText}</strong>
+                    ) : (
+                      <em key={j}>{anotherSanitizedText}</em>
+                    )
+                  })}
                 </p>
+              ) : content.type == 'ul' ? (
+                <ul key={i}>
+                  {content.list?.map((text, j) => (
+                    <li
+                      key={j}
+                      className="list-disc ml-8 text-gray-700 dark:text-gray-400/80"
+                    >
+                      {text}
+                    </li>
+                  ))}
+                </ul>
               ) : (
                 <React.Fragment key={i} />
               )
