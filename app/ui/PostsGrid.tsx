@@ -1,7 +1,6 @@
 'use client'
 
 import PostCard from './PostCard'
-import { CaretLeft, CaretRight } from '@phosphor-icons/react'
 
 export default function PostsGrid() {
   const arr = new Array(6).fill(false)

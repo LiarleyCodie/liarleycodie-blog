@@ -12,7 +12,7 @@ export default function Home(params: IHomeProps) {
   console.log(params)
 
   return (
-    <main className="min-h-screen items-center gap-16 flex flex-col pb-[10rem] bg-gray-200 dark:bg-gray-950">
+    <main className="min-h-screen items-center gap-16 flex flex-col pb-16 bg-gray-200 dark:bg-gray-950">
       {/* heading */}
       <div
         style={{
@@ -46,7 +46,7 @@ export default function Home(params: IHomeProps) {
           >
             Photo by{' '}
             <a
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
               href="https://unsplash.com/photos/time-lapse-photography-of-lights-Lb_mgwPUxeM"
               className="hover:text-indigo-300 duration-200"
             >
@@ -54,7 +54,7 @@ export default function Home(params: IHomeProps) {
             </a>{' '}
             on{' '}
             <a
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
               href="https://unsplash.com/"
               className="hover:text-indigo-300 duration-200"
             >

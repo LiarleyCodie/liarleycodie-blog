@@ -7,13 +7,33 @@ interface IH2Props {
 }
 
 function H2({ id, children }: IH2Props) {
+  const accentMap = {
+    á: 'a',
+    â: 'a',
+    ã: 'a',
+    é: 'e',
+    ê: 'e',
+    í: 'i',
+    î: 'i',
+    ó: 'o',
+    ô: 'o',
+    õ: 'o',
+    ú: 'u',
+    û: 'u',
+    ç: 'c',
+  }
+
+  const h2Term = children
+    .toLowerCase()
+    //@ts-ignore
+    .replace(/[áâãéêíîóôõúûç]/g, (match) => accentMap[match] || match)
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+
   return (
-    <h2
-      id={id?.toLowerCase().replace(/\s+/g, '-')}
-      className="text-2xl font-medium mb-4 scroll-mt-36"
-    >
+    <h2 id={h2Term} className="text-2xl font-medium mb-4 scroll-mt-36">
       <a
-        href={`#${id?.toLowerCase().replace(/\s+/g, '-')}`}
+        href={`#${h2Term}`}
         className="group flex items-center gap-2 duration-200 hover:text-indigo-600 dark:hover:text-indigo-400"
       >
         {children}

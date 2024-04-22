@@ -5,7 +5,7 @@ interface IPostBannerProps {
   icon_url: string
   author: string
   original_url: string
-  provider: string
+  provider_name: string
   provider_url: string
 }
 
@@ -14,7 +14,7 @@ function PostBanner({
   icon_url,
   author,
   original_url,
-  provider,
+  provider_name,
   provider_url,
 }: IPostBannerProps) {
   return (
@@ -40,7 +40,7 @@ function PostBanner({
       >
         Photo by{' '}
         <a
-          target="_blank"
+          target="_blank" rel="noopener noreferrer"
           href={original_url}
           className="hover:text-indigo-300 duration-200"
         >
@@ -48,11 +48,11 @@ function PostBanner({
         </a>{' '}
         on{' '}
         <a
-          target="_blank"
+          target="_blank" rel="noopener noreferrer"
           href={provider_url}
           className="hover:text-indigo-300 duration-200"
         >
-          <strong>{provider}</strong>
+          <strong>{provider_name}</strong>
         </a>
       </p>
     </div>

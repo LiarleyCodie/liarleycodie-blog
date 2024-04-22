@@ -2,9 +2,14 @@ import { ThemeProvider } from 'next-themes'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import Navbar from './ui/Navbar'
-import './globals.css'
 
-const poppins = Poppins({ weight: ['500', '400', '200', '300'], subsets: ['latin'] })
+import './globals.css'
+import Footer from './ui/Footer'
+
+const poppins = Poppins({
+  weight: ['500', '400', '200', '300'],
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
   title: 'LiarleyCodie',
@@ -23,6 +28,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Navbar />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

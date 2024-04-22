@@ -97,7 +97,7 @@ export default function Navbar() {
             <a
               className="opacity-50 duration-200 items-center hover:opacity-100 justify-center flex h-8 w-8"
               href="https://github.com/LiarleyCodie"
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
             >
               <GithubLogo className="fill-gray-900 dark:fill-gray-200 text-4xl md:text-2xl" />
             </a>
@@ -106,7 +106,7 @@ export default function Navbar() {
             <a
               className="opacity-50 duration-200 mx-4 md:mx-0 items-center hover:opacity-100 justify-center flex h-8 w-8"
               href="https://www.instagram.com/liarleycodie/"
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
             >
               <InstagramLogo className="fill-gray-900 dark:fill-gray-200 text-4xl md:text-2xl" />
             </a>
@@ -115,7 +115,7 @@ export default function Navbar() {
             <a
               className="opacity-50 duration-200 items-center hover:opacity-100 justify-center flex h-8 w-8"
               href="https://twitter.com/liarleycodie"
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
             >
               <XLogo className="fill-gray-900 dark:fill-gray-200 text-4xl md:text-2xl" />
             </a>
