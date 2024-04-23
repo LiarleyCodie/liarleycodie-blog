@@ -2,14 +2,30 @@ import searchIcon from '@/app/ui/images/search-icon.svg'
 import Image from 'next/image'
 import PostsGrid from './ui/PostsGrid'
 import PaginationControl from './ui/PaginationControl'
+import { Suspense } from 'react'
+import { selectAll } from './lib/databaseConnection'
+
+interface IPost {
+  title: string
+  description: string
+  publicationDate: number
+  tags: string[]
+  recent: boolean
+  path_id: string
+  id: string
+}
 
 interface IHomeProps {
   params: {}
   searchParams: { [id: string]: string }
 }
 
-export default function Home(params: IHomeProps) {
-  console.log(params)
+export default async function Home(params: IHomeProps) {
+  const gridPosts: IPost[] = Array.from(await selectAll()).map(({id, data}) => {
+    const post: IPost = JSON.parse(data)
+    post.id = String(id)
+    return post
+  })
 
   return (
     <main className="min-h-screen items-center gap-16 flex flex-col pb-16 bg-gray-200 dark:bg-gray-950">
@@ -46,7 +62,8 @@ export default function Home(params: IHomeProps) {
           >
             Photo by{' '}
             <a
-              target="_blank" rel="noopener noreferrer"
+              target="_blank"
+              rel="noopener noreferrer"
               href="https://unsplash.com/photos/time-lapse-photography-of-lights-Lb_mgwPUxeM"
               className="hover:text-indigo-300 duration-200"
             >
@@ -54,7 +71,8 @@ export default function Home(params: IHomeProps) {
             </a>{' '}
             on{' '}
             <a
-              target="_blank" rel="noopener noreferrer"
+              target="_blank"
+              rel="noopener noreferrer"
               href="https://unsplash.com/"
               className="hover:text-indigo-300 duration-200"
             >
@@ -64,8 +82,39 @@ export default function Home(params: IHomeProps) {
         </div>
       </div>
 
-      <PostsGrid />
+      {/* Suspense need to be improved! */}
+      <Suspense fallback={<p>Loading posts...</p>}>
+        <PostsGrid gridPosts={gridPosts} />
+      </Suspense>
+
       <PaginationControl />
     </main>
+  )
+}
+
+export function PostsGridSkeleton() {
+  const x = [1, 2, 3, 4, 5, 6]
+  return (
+    <section className="flex flex-wrap max-w-xs md:max-w-[37rem] md:gap-4 lg:max-w-4xl justify-center md:justify-start gap-6">
+      {x.map((_, i) => (
+        <article
+          key={i}
+          className="flex flex-col w-72 h-80 bg-gray-900 rounded-md"
+        >
+          <div className="flex w-full h-16 bg-gray-800 rounded-t-md"></div>
+          <div className="px-6 py-5">
+            <div className="flex w-full mb-2 h-5 rounded-full bg-gray-800"></div>
+            <div className="flex w-20 h-5 rounded-full bg-gray-800"></div>
+          </div>
+        </article>
+      ))}
+      <article className="flex flex-col w-72 h-80 bg-gray-900 rounded-md">
+        <div className="flex w-full h-16 bg-gray-800 rounded-t-md"></div>
+        <div className="px-6 py-5">
+          <div className="flex w-full mb-2 h-5 rounded-full bg-gray-800"></div>
+          <div className="flex w-20 h-5 rounded-full bg-gray-800"></div>
+        </div>
+      </article>
+    </section>
   )
 }

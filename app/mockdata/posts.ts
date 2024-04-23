@@ -11,7 +11,7 @@ export const posts = {
     },
     heading: {
       title: 'The relation between wall clocks and processors',
-      publicationDate: 'April 19, 2024',
+      publicationDate: 1713750085236,
       tags: ['Hardware', 'Potato', 'Apple II', 'PC', 'CPU'],
     },
     content: [
@@ -67,7 +67,7 @@ export const posts = {
     },
     heading: {
       title: "What's Wrong With Assembly Language",
-      publicationDate: 'April 15, 1936',
+      publicationDate: 1713750085236,
       tags: ['Hardware', 'ASM', 'Apple II', 'PC', 'CPU'],
     },
     content: [
@@ -81,14 +81,42 @@ export const posts = {
       },
       {
         type: 'p',
-        text: 'Here are the reasons people give for not using assembly',
+        text: 'Here are the reasons people give for not using assembly:',
       },
       {
         type: 'ul',
         list: [
           'Assembly is hard to learn.',
           'Assembly is hard to read and understand.',
-          'Assembly is hard to debug.'
+          'Assembly is hard to debug.',
+          'Assembly is hard to maintain.',
+          'Assembly is hard to write.',
+          'Assembly language programming is time consuming.',
+          'Improved compiler technology has eliminated the need for assembly language.',
+          'Today, machines are so fast that we no longer need to use assembly.',
+          'If you need more speed, you should use a better algorithm rather than switch to assembly language.',
+          'Machines have so much memory today, saving space using assembly is not important.',
+          'Assembly language is not portable.',
+        ],
+      },
+      {
+        type: 'p_a_strong_em',
+        content: [
+          { type: 'text', text: 'An ' },
+          { type: 'em', text: 'old joke' },
+          { type: 'strong', text: ' goes ' },
+          { type: 'link', text: 'something', href: '/' },
+          { type: 'text', text: ' like this' },
+        ],
+      },
+      {
+        type: 'p_a_strong_em',
+        content: [
+          { type: 'text', text: 'An ' },
+          { type: 'em', text: 'old joke' },
+          { type: 'strong', text: ' goes ' },
+          { type: 'link', text: 'something', href: '/' },
+          { type: 'text', text: ' like this' },
         ],
       },
     ],
@@ -105,7 +133,7 @@ export const posts = {
     },
     heading: {
       title: 'The Binary Numbering System',
-      publicationDate: 'September 25, 2012',
+      publicationDate: 0,
       tags: ['Math', 'Binary', 'ASM', 'CPU', 'PC'],
     },
     content: [],

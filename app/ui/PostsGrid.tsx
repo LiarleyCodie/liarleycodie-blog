@@ -1,18 +1,31 @@
 'use client'
 
 import PostCard from './PostCard'
-import { gridPosts } from '@/mock-data/GridPosts'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/es'
+import { useEffect, useState } from 'react'
 
-const GridData = gridPosts
+interface IPostGridProps {
+  gridPosts: {
+    title: string
+    description: string
+    publicationDate: number
+    tags: string[]
+    path_id: string
+    recent: boolean
+  }[]
+}
 
-export default function PostsGrid() {
+export default function PostsGrid({ gridPosts }: IPostGridProps) {
+  dayjs.extend(relativeTime)
   return (
     <section className="flex flex-wrap max-w-xs md:max-w-[37rem] md:gap-4 lg:max-w-4xl justify-center md:justify-start gap-6">
-      {GridData.map((post, i) => (
+      {gridPosts.map((post, i) => (
         <PostCard
           title={post.title}
           description={post.description}
-          publishedInDays={post.publicationDate}
+          publishedIn={dayjs(post.publicationDate).fromNow()}
           tags={post.tags}
           href={`/post/${post.path_id}`}
           recent={post.recent}

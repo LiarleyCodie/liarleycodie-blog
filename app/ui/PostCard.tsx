@@ -6,7 +6,7 @@ import CardTag from './CardTag'
 import style from '@/app/ui/PostCard.module.css'
 
 interface IPostCardProps {
-  publishedInDays: number
+  publishedIn: string
   recent?: boolean
   tags: string[]
   href: string
@@ -14,7 +14,7 @@ interface IPostCardProps {
   description: string
 }
 function PostCard({
-  publishedInDays,
+  publishedIn = 'the publication date is a mistery',
   tags,
   href,
   title,
@@ -55,7 +55,7 @@ function PostCard({
         </section>
         <footer>
           <span className="text-xs text-gray-500">
-            {publishedInDays} days ago
+            {publishedIn}
           </span>
         </footer>
       </a>
