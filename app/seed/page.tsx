@@ -59,20 +59,22 @@ export default async function Seed() {
   ]
   const posts = []
 
-  for (let i = 0; i < titles.length; i++) {
-    const currentTags = []
-    for (let i = 0; i < 5; i++) {
-      currentTags.push(tags[Math.floor(Math.random() * tags.length)])
+  let title_id = 0
+  for (let i = 0; i < 60; i++) {
+    if (title_id > titles.length - 1) title_id = 0
+    const currentTags = new Set<string>()
+    for (let j = 0; j < 5; j++) {
+      currentTags.add(tags[Math.floor(Math.random() * tags.length)])
     }
 
     const post: IPost = {
-      title: titles[i],
+      title: titles[title_id],
       description: description[Math.floor(Math.random() * description.length)],
       publicationDate:
         timestamps[Math.floor(Math.random() * timestamps.length)],
-      tags: currentTags,
+      tags: Array.from(currentTags),
       recent: false,
-      path_id: titles[i]
+      path_id: titles[title_id]
         .toLowerCase()
         .replace(/[:\s?]+/g, '-')
         .replace(/-+/g, '-')
@@ -80,7 +82,8 @@ export default async function Seed() {
       id: '',
     }
 
-    // posts.push(post)
+    posts.push(post)
+    title_id += 1
     await insertData(post)
   }
 

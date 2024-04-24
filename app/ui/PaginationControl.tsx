@@ -3,6 +3,7 @@
 import { CaretLeft, CaretRight } from '@phosphor-icons/react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { generatePagination } from '../lib/utils'
+import clsx from 'clsx'
 
 interface IPaginationControlProps {
   // amountOfPosts: number
@@ -15,7 +16,7 @@ export default function PaginationControl({
 }: IPaginationControlProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const currentPage = (Number(searchParams.get('page')) || 1)
+  const currentPage = Number(searchParams.get('page')) || 1
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams)
@@ -60,14 +61,28 @@ function PaginationNumber({
   isActive: boolean
   href: string
 }) {
-  const classes = isActive
-    ? 'dark:bg-indigo-950 w-8 h-8 rounded-md flex border-indigo-600 justify-center items-center border dark:border-indigo-500 bg-indigo-200 text-sm text-indigo-700 dark:text-indigo-400'
-    : 'group bg-gray-300 border-gray-500 dark:bg-gray-900 w-8 h-8 flex items-center justify-center rounded-md border dark:border-gray-800 hover:bg-gray-200 hover:border-indigo-500 dark:hover:bg-gray-800 dark:hover:border-indigo-500 active:bg-indigo-200 active:dark:bg-indigo-950 duration-200 text-sm text-gray-500'
+  const defaultClasses =
+    'w-8 h-8 flex justify-center items-center rounded-md border text-sm select-none duration-200'
 
-  return isActive ? (
-    <a className={classes}>{page}</a>
+  return isActive || page == '...' ? (
+    <a
+      className={clsx(
+        defaultClasses,
+        page == '...'
+          ? 'dark:bg-gray-900 dark:border-gray-800 dark:text-gray-600 bg-gray-300 border-gray-400 text-gray-500'
+          : 'bg-indigo-200 border-indigo-700 text-indigo-800 dark:bg-indigo-950 dark:border-indigo-600 dark:text-indigo-500',
+      )}
+    >
+      {page}
+    </a>
   ) : (
-    <a className={classes} href={href}>
+    <a
+      className={clsx(
+        defaultClasses,
+        'hover:border-indigo-500 hover:dark:bg-gray-800 hover:text-indigo-700 dark:hover:text-indigo-500 hover:bg-gray-200 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 bg-gray-300 border-gray-500 text-gray-600',
+      )}
+      href={href}
+    >
       {page}
     </a>
   )
@@ -93,14 +108,26 @@ function PaginationArrow({
       <CaretRight size={18} className={iconClasses} />
     )
 
-  const classes = isDisabled
-    ? 'dark:bg-gray-900 w-8 h-8 rounded-md flex border-gray-400 justify-center items-center border dark:border-gray-800 bg-gray-300'
-    : 'group bg-gray-300 border-gray-500 dark:bg-gray-900 w-8 h-8 flex items-center justify-center rounded-md border dark:border-gray-800 hover:bg-gray-200 hover:border-indigo-500 dark:hover:bg-gray-800 dark:hover:border-indigo-500 active:bg-indigo-200 active:dark:bg-indigo-950 duration-200'
+  const defaultClasses =
+    'group w-8 h-8 rounded-md flex justify-center items-center border duration-200'
 
   return isDisabled ? (
-    <a className={classes}>{icon}</a>
+    <a
+      className={clsx(
+        defaultClasses,
+        'dark:bg-gray-900 dark:border-gray-800 dark:fill-gray-500 bg-gray-300 border-gray-400',
+      )}
+    >
+      {icon}
+    </a>
   ) : (
-    <a className={classes} href={href}>
+    <a
+      className={clsx(
+        defaultClasses,
+        'dark:bg-gray-900 dark:border-gray-700 hover:border-indigo-500 bg-gray-300 border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-800',
+      )}
+      href={href}
+    >
       {icon}
     </a>
   )

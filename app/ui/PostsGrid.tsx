@@ -1,5 +1,3 @@
-'use client'
-
 import PostCard from './PostCard'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'

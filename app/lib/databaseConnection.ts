@@ -47,7 +47,7 @@ export async function select(offset: number = 1) {
     return result
   } catch (err) {
     console.log(
-      '> ❌ [Database | select]: something goes wrong while fetching data',
+      '\n> ❌ [Database | select]: something goes wrong while fetching data',
     )
     console.error(err)
     throw err
@@ -62,7 +62,7 @@ export async function getTotalPages() {
     return totalPages
   } catch (err) {
     console.log(
-      '> ❌ [Database | getPostsCount]: something goes wrong while amount of posts',
+      '\n> ❌ [Database | getPostsCount]: something goes wrong while amount of posts',
     )
     console.error(err)
     throw err
@@ -85,7 +85,7 @@ export async function insertData(data: IPost) {
     console.log('> ✔️ [Database | insertData]: data insert!')
   } catch (err) {
     console.log(
-      '> ❌ [Database | insertData]: something goes wrong while inserting data',
+      '\n> ❌ [Database | insertData]: something goes wrong while inserting data',
     )
     console.error(err)
     throw err
