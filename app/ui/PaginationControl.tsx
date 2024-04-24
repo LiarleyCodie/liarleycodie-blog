@@ -15,7 +15,7 @@ export default function PaginationControl({
 }: IPaginationControlProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const currentPage = Number(searchParams.get('page')) || 1
+  const currentPage = (Number(searchParams.get('page')) || 1)
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams)
@@ -43,7 +43,7 @@ export default function PaginationControl({
         ))}
         <PaginationArrow
           href={createPageURL(currentPage + 1)}
-          isDisabled={currentPage >= 1}
+          isDisabled={currentPage >= totalPages}
           direction="right"
         />
       </div>

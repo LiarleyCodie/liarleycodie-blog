@@ -41,7 +41,7 @@ export async function selectAll() {
 export async function select(offset: number = 1) {
   try {
     const result = await conn`
-      SELECT * FROM grid_posts ORDER BY publication_date DESC LIMIT 9 OFFSET (${(offset - 1) * 9})
+      SELECT * FROM grid_posts ORDER BY publication_date DESC LIMIT 9 OFFSET (${((offset < 1 ? 1 : offset) - 1) * 9})
     `
     console.log('> ✔️ [Database | select]: data retrieved!')
     return result
