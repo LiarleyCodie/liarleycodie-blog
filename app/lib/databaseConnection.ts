@@ -22,6 +22,8 @@ const conn = postgres({
   //   ssl: 'require' // needed when using Neon.tech connection
 })
 
+const ITEMS_PER_PAGE = 9
+
 export async function selectAll() {
   try {
     const users = await conn`SELECT * FROM grid_posts`
@@ -36,9 +38,50 @@ export async function selectAll() {
   }
 }
 
+export async function select(offset: number = 1) {
+  try {
+    const result = await conn`
+      SELECT * FROM grid_posts ORDER BY publication_date DESC LIMIT 9 OFFSET (${(offset - 1) * 9})
+    `
+    console.log('> ✔️ [Database | select]: data retrieved!')
+    return result
+  } catch (err) {
+    console.log(
+      '> ❌ [Database | select]: something goes wrong while fetching data',
+    )
+    console.error(err)
+    throw err
+  }
+}
+
+export async function getTotalPages() {
+  try {
+    const count = await conn`SELECT COUNT(*) FROM grid_posts`
+    const totalPages = Math.ceil(Number(count[0].count) / ITEMS_PER_PAGE)
+    console.log('> ✔️ [Database | getPostsCount]: amount of posts retrieved!')
+    return totalPages
+  } catch (err) {
+    console.log(
+      '> ❌ [Database | getPostsCount]: something goes wrong while amount of posts',
+    )
+    console.error(err)
+    throw err
+  }
+}
+
 export async function insertData(data: IPost) {
   try {
-    await conn`INSERT INTO grid_posts (data) VALUES (${JSON.stringify(data)})`
+    await conn`
+      INSERT INTO grid_posts (
+        title, description, publication_date, tags, recent, path_id
+      ) VALUES (
+        ${data.title}, 
+        ${data.description}, 
+        to_timestamp(${data.publicationDate}), 
+        ${data.tags}, 
+        ${data.recent}, 
+        ${data.path_id}
+      )`
     console.log('> ✔️ [Database | insertData]: data insert!')
   } catch (err) {
     console.log(

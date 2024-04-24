@@ -49,7 +49,7 @@ interface IPostData {
 let postData: IPostData;
 
 export async function generateMetadata({ params, searchParams }: IProps) {
-  postData = posts[params.id]
+  postData = posts[params.id] // params.id = 'the-relation-between-wall-clocks-and-processors'
 
   return {
     title: postData.heading.title + ' | LiarleyCodie',

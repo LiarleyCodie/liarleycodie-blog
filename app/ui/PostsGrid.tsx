@@ -4,16 +4,16 @@ import PostCard from './PostCard'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/es'
-import { useEffect, useState } from 'react'
 
 interface IPostGridProps {
   gridPosts: {
     title: string
     description: string
-    publicationDate: number
+    publication_date: number
     tags: string[]
     path_id: string
     recent: boolean
+    id: number
   }[]
 }
 
@@ -25,7 +25,7 @@ export default function PostsGrid({ gridPosts }: IPostGridProps) {
         <PostCard
           title={post.title}
           description={post.description}
-          publishedIn={dayjs(post.publicationDate).fromNow()}
+          publishedIn={dayjs((new Date(post.publication_date).getTime())).fromNow()}
           tags={post.tags}
           href={`/post/${post.path_id}`}
           recent={post.recent}

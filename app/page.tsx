@@ -3,16 +3,16 @@ import Image from 'next/image'
 import PostsGrid from './ui/PostsGrid'
 import PaginationControl from './ui/PaginationControl'
 import { Suspense } from 'react'
-import { selectAll } from './lib/databaseConnection'
+import { select, getTotalPages } from './lib/databaseConnection'
 
 interface IPost {
   title: string
   description: string
-  publicationDate: number
+  publication_date: number
   tags: string[]
   recent: boolean
   path_id: string
-  id: string
+  id: number
 }
 
 interface IHomeProps {
@@ -20,12 +20,11 @@ interface IHomeProps {
   searchParams: { [id: string]: string }
 }
 
-export default async function Home(params: IHomeProps) {
-  const gridPosts: IPost[] = Array.from(await selectAll()).map(({id, data}) => {
-    const post: IPost = JSON.parse(data)
-    post.id = String(id)
-    return post
-  })
+export default async function Home({ params, searchParams }: IHomeProps) {
+  const { page } = searchParams
+  const gridPosts: IPost[] | any = Array.from(await select(Number(page || 1)))
+
+  const count = await getTotalPages()
 
   return (
     <main className="min-h-screen items-center gap-16 flex flex-col pb-16 bg-gray-200 dark:bg-gray-950">
@@ -87,7 +86,7 @@ export default async function Home(params: IHomeProps) {
         <PostsGrid gridPosts={gridPosts} />
       </Suspense>
 
-      <PaginationControl />
+      <PaginationControl totalPages={count} />
     </main>
   )
 }
