@@ -1,7 +1,7 @@
 import PostsGrid from './ui/PostsGrid'
 import PaginationControl from './ui/PaginationControl'
 import { Suspense } from 'react'
-import { select, getTotalPages } from './lib/databaseConnection'
+import { select, getTotalPages, find } from './lib/databaseConnection'
 import SearchBar from './ui/SearchBar'
 import DOMPurify from 'isomorphic-dompurify'
 
@@ -22,12 +22,18 @@ interface IHomeProps {
 
 export default async function Home({ params, searchParams }: IHomeProps) {
   const { page, search } = searchParams
-  const gridPosts: IPost[] | any = Array.from(await select(Number(page || 1)))
-
-  const count = await getTotalPages()
+  let count: number;
+  let gridPosts: IPost[] | any; 
 
   if (search) {
-    console.log(DOMPurify.sanitize(search ?? ''))
+    const term = DOMPurify.sanitize(search ?? '')
+    // console.log(await find(term))
+    let result = await find(term, Number(page) || 1)
+    gridPosts = result.data
+    count = result.totalPages
+  } else {
+    gridPosts = Array.from(await select(Number(page || 1)))
+    count = await getTotalPages()
   }
 
   return (
@@ -105,6 +111,7 @@ function HomeBanner({
         backgroundImage: `url("${bannerUrl}")`,
         backgroundPosition: backgroundPosition,
       }}
+      arial-label='Banner section'
       className={`bg-cover flex flex-col w-full h-96 justify-center items-center px-2 md:mt-20 bg-zinc-800`}
     >
       <div className="flex-1"></div>
@@ -126,6 +133,7 @@ function HomeBanner({
             rel="noopener noreferrer"
             href={photoAuthorUrl}
             className="hover:text-indigo-300 duration-200"
+            aria-label='Image link on the original plataform'
           >
             <strong>{photoAuthorName}</strong>
           </a>{' '}
@@ -135,6 +143,7 @@ function HomeBanner({
             rel="noopener noreferrer"
             href={providerUrl}
             className="hover:text-indigo-300 duration-200"
+            aria-label='official platform where the image was obtained from'
           >
             <strong>{providerName}</strong>
           </a>

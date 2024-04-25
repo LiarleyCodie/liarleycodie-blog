@@ -10,6 +10,7 @@ export default function Footer() {
             <a
               href="/?error=notfound"
               className="dark:text-gray-400 text-gray-600 hover:text-indigo-600 dark:hover:text-indigo-400 duration-200"
+              aria-label='this links redirects you to the official portfolio of the creator of this blog'
             >
               LiarleyCodie
             </a>
@@ -17,7 +18,7 @@ export default function Footer() {
         </span>
         <Image
           src="/heart.png"
-          alt=""
+          alt="heart_icon.png"
           width={16}
           height={16}
           draggable="false"
@@ -30,6 +31,7 @@ export default function Footer() {
               href="https://vercel.com/"
               className="dark:text-gray-400 text-gray-600 hover:text-indigo-600 dark:hover:text-indigo-400 duration-200"
               rel="noopener noreferrer"
+              aria-label="this link redirects you to the official Vercel website"
             >
               Vercel
             </a>

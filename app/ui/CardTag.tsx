@@ -28,6 +28,7 @@ function CardTag({ children }: ICardTagProps) {
     <a
       href={`/?search=${tagTerm}`}
       className="flex justify-center items-center w-fit bg-indigo-600/20 leading-3 px-2 py-1 rounded-md dark:text-indigo-400/60 text-indigo-800/80 hover:text-indigo-800 text-xs font-medium hover:bg-indigo-800/30 dark:hover:text-indigo-400 duration-200"
+      aria-label='this tag redirects to the home page and search for the tag'
     >
       {children}
     </a>

@@ -34,7 +34,7 @@ export default function PaginationControl({
           isDisabled={currentPage <= 1}
           direction="left"
         />
-        {allPages.map((page, id) => (
+        {allPages.map((page) => (
           <PaginationNumber
             key={page}
             href={createPageURL(page)}
@@ -72,6 +72,7 @@ function PaginationNumber({
           ? 'dark:bg-gray-900 dark:border-gray-800 dark:text-gray-600 bg-gray-300 border-gray-400 text-gray-500'
           : 'bg-indigo-200 border-indigo-700 text-indigo-800 dark:bg-indigo-950 dark:border-indigo-600 dark:text-indigo-500',
       )}
+      aria-label="this link means that between the previous pagination and next there are many pages or you already are in the page"
     >
       {page}
     </a>
@@ -82,6 +83,7 @@ function PaginationNumber({
         'hover:border-indigo-500 hover:dark:bg-gray-800 hover:text-indigo-700 dark:hover:text-indigo-500 hover:bg-gray-200 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 bg-gray-300 border-gray-500 text-gray-600',
       )}
       href={href}
+      aria-label="this link redirects you to the correspondent pagination number"
     >
       {page}
     </a>
@@ -117,6 +119,7 @@ function PaginationArrow({
         defaultClasses,
         'dark:bg-gray-900 dark:border-gray-800 dark:fill-gray-500 bg-gray-300 border-gray-400',
       )}
+      aria-label='this button means you cannot go to the previous or next pagination'
     >
       {icon}
     </a>
@@ -127,6 +130,7 @@ function PaginationArrow({
         'dark:bg-gray-900 dark:border-gray-700 hover:border-indigo-500 bg-gray-300 border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-800',
       )}
       href={href}
+      aria-label='this links jumps to the previous or next pagination'
     >
       {icon}
     </a>

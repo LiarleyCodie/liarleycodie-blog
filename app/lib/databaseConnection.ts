@@ -58,11 +58,40 @@ export async function getTotalPages() {
   try {
     const count = await conn`SELECT COUNT(*) FROM grid_posts`
     const totalPages = Math.ceil(Number(count[0].count) / ITEMS_PER_PAGE)
-    console.log('> ✔️ [Database | getPostsCount]: amount of posts retrieved!')
+    console.log('> ✔️ [Database | getTotalPages]: amount of posts retrieved!')
     return totalPages
   } catch (err) {
     console.log(
-      '\n> ❌ [Database | getPostsCount]: something goes wrong while amount of posts',
+      '\n> ❌ [Database | getTotalPages]: something goes wrong while amount of posts',
+    )
+    console.error(err)
+    throw err
+  }
+}
+
+export async function find(term: string, page: number = 1) {
+  const offset = (page - 1) * ITEMS_PER_PAGE
+  try {
+    const result = await conn`
+      SELECT * FROM grid_posts
+      WHERE title ILIKE '%' || ${term} || '%'
+      OR description ILIKE '%' || ${term} || '%'
+      OR ${term} ILIKE ANY(tags)
+      ORDER BY publication_date
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `
+    const totalCount = await conn`
+      SELECT COUNT(*) FROM grid_posts
+      WHERE title ILIKE '%' || ${term} || '%'
+      OR description ILIKE '%' || ${term} || '%'
+      OR ${term} ILIKE ANY(tags) 
+    `
+    const totalPages = Math.ceil(Number(totalCount[0].count) / ITEMS_PER_PAGE)
+    console.log('> 🔍 [Database | find]: data retrieved!')
+    return { data: result, totalPages}
+  } catch (err) {
+    console.log(
+      '\n> ❌ [Database | find]: something goes wrong while searching for term',
     )
     console.error(err)
     throw err
