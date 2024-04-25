@@ -6,12 +6,10 @@ import { generatePagination } from '../lib/utils'
 import clsx from 'clsx'
 
 interface IPaginationControlProps {
-  // amountOfPosts: number
   totalPages: number
 }
 
 export default function PaginationControl({
-  // amountOfPosts,
   totalPages,
 }: IPaginationControlProps) {
   const pathname = usePathname()

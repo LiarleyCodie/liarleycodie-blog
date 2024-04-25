@@ -1,8 +1,6 @@
 'use client'
 
 import lyiarLogo from '@/app/ui/images/liarleycodie-logo.svg'
-import burgerMenuIcon from '@/app/ui/images/burger-menu-icon.svg'
-import closeNavIcon from '@/app/ui/images/close-nav-icon.svg'
 import {
   Sun,
   MoonStars,

@@ -1,33 +1,24 @@
 import PostsGrid from './ui/PostsGrid'
 import PaginationControl from './ui/PaginationControl'
-import { Suspense } from 'react'
 import { select, getTotalPages, find } from './lib/databaseConnection'
 import SearchBar from './ui/SearchBar'
 import DOMPurify from 'isomorphic-dompurify'
-
-interface IPost {
-  title: string
-  description: string
-  publication_date: number
-  tags: string[]
-  recent: boolean
-  path_id: string
-  id: number
-}
+import Image from 'next/image'
+import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr'
+import { IPost } from './definitions/PostCard'
 
 interface IHomeProps {
   params: {}
   searchParams: { [id: string]: string }
 }
 
-export default async function Home({ params, searchParams }: IHomeProps) {
+export default async function Home({ searchParams }: IHomeProps) {
   const { page, search } = searchParams
-  let count: number;
-  let gridPosts: IPost[] | any; 
+  let count: number
+  let gridPosts: IPost[] | any
 
   if (search) {
     const term = DOMPurify.sanitize(search ?? '')
-    // console.log(await find(term))
     let result = await find(term, Number(page) || 1)
     gridPosts = result.data
     count = result.totalPages
@@ -49,40 +40,34 @@ export default async function Home({ params, searchParams }: IHomeProps) {
         backgroundPosition="bottom"
       />
 
-      {/* Suspense need to be improved! */}
-      <Suspense fallback={<p>Loading posts...</p>}>
+      {gridPosts.length ? (
         <PostsGrid gridPosts={gridPosts} />
-      </Suspense>
+      ) : (
+        <div className="flex flex-col items-center gap-4">
+          <h1 className="text-3xl dark:text-gray-500 text-gray-600">
+            Nothing was found!
+          </h1>
+          <Image
+            className="opacity-70"
+            draggable={false}
+            src="/pensive_face.webp"
+            width={128}
+            height={128}
+            alt="pensive_face.webp"
+          />
+          <a
+            className="group flex items-center gap-1 text-xl dark:text-indigo-300 dark:hover:text-indigo-500 text-indigo-900 hover:text-indigo-600 duration-200"
+            href="/"
+          >
+            How about seeing all the posts?
+          
+            <ArrowUpRight size={24} className='animate-bounce' />
+          </a>
+        </div>
+      )}
 
       <PaginationControl totalPages={count} />
     </main>
-  )
-}
-
-export function PostsGridSkeleton() {
-  const x = [1, 2, 3, 4, 5, 6]
-  return (
-    <section className="flex flex-wrap max-w-xs md:max-w-[37rem] md:gap-4 lg:max-w-4xl justify-center md:justify-start gap-6">
-      {x.map((_, i) => (
-        <article
-          key={i}
-          className="flex flex-col w-72 h-80 bg-gray-900 rounded-md"
-        >
-          <div className="flex w-full h-16 bg-gray-800 rounded-t-md"></div>
-          <div className="px-6 py-5">
-            <div className="flex w-full mb-2 h-5 rounded-full bg-gray-800"></div>
-            <div className="flex w-20 h-5 rounded-full bg-gray-800"></div>
-          </div>
-        </article>
-      ))}
-      <article className="flex flex-col w-72 h-80 bg-gray-900 rounded-md">
-        <div className="flex w-full h-16 bg-gray-800 rounded-t-md"></div>
-        <div className="px-6 py-5">
-          <div className="flex w-full mb-2 h-5 rounded-full bg-gray-800"></div>
-          <div className="flex w-20 h-5 rounded-full bg-gray-800"></div>
-        </div>
-      </article>
-    </section>
   )
 }
 
@@ -111,7 +96,7 @@ function HomeBanner({
         backgroundImage: `url("${bannerUrl}")`,
         backgroundPosition: backgroundPosition,
       }}
-      arial-label='Banner section'
+      arial-label="Banner section"
       className={`bg-cover flex flex-col w-full h-96 justify-center items-center px-2 md:mt-20 bg-zinc-800`}
     >
       <div className="flex-1"></div>
@@ -133,7 +118,7 @@ function HomeBanner({
             rel="noopener noreferrer"
             href={photoAuthorUrl}
             className="hover:text-indigo-300 duration-200"
-            aria-label='Image link on the original plataform'
+            aria-label="Image link on the original plataform"
           >
             <strong>{photoAuthorName}</strong>
           </a>{' '}
@@ -143,7 +128,7 @@ function HomeBanner({
             rel="noopener noreferrer"
             href={providerUrl}
             className="hover:text-indigo-300 duration-200"
-            aria-label='official platform where the image was obtained from'
+            aria-label="official platform where the image was obtained from"
           >
             <strong>{providerName}</strong>
           </a>
