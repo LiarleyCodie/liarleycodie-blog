@@ -1,5 +1,6 @@
 import postgres from 'postgres'
 import 'dotenv/config'
+import { IPostData } from '../definitions/PostPage'
 
 interface IPost {
   title: string
@@ -88,7 +89,7 @@ export async function find(term: string, page: number = 1) {
     `
     const totalPages = Math.ceil(Number(totalCount[0].count) / ITEMS_PER_PAGE)
     console.log('> 🔍 [Database | find]: data retrieved!')
-    return { data: result, totalPages}
+    return { data: result, totalPages }
   } catch (err) {
     console.log(
       '\n> ❌ [Database | find]: something goes wrong while searching for term',
@@ -98,23 +99,66 @@ export async function find(term: string, page: number = 1) {
   }
 }
 
-export async function insertData(data: IPost) {
+export async function insertGridPostData(data: IPost) {
   try {
-    await conn`
+    const postId = await conn`
       INSERT INTO grid_posts (
         title, description, publication_date, tags, recent, path_id
-      ) VALUES (
+      ) 
+      VALUES (
         ${data.title}, 
         ${data.description}, 
         to_timestamp(${data.publicationDate}), 
         ${data.tags}, 
         ${data.recent}, 
         ${data.path_id}
-      )`
-    console.log('> ✔️ [Database | insertData]: data insert!')
+        
+      )
+      RETURNING id, path_id;
+      `
+    console.log('> ✔️ [Database | insertGridPostData]: data insert!')
+    return { postId }
   } catch (err) {
     console.log(
-      '\n> ❌ [Database | insertData]: something goes wrong while inserting data',
+      '\n> ❌ [Database | insertGridPostData]: something goes wrong while inserting data',
+    )
+    console.error(err)
+    throw err
+  }
+}
+
+export async function insertJsonPostData(
+  data: IPostData,
+  grid_post_id: number,
+  grid_post_path_id: string
+) {
+  try {
+    await conn`
+        INSERT INTO json_posts (grid_posts_id, grid_post_path_id, post_data) 
+        VALUES (
+          ${grid_post_id}, ${grid_post_path_id}, ${JSON.stringify(data)}
+        )
+      `
+    console.log('> ✔️ [Database | insertJsonPostData]: data insert!')
+  } catch (err) {
+    console.log(
+      '\n> ❌ [Database | insertJsonPostData]: something goes wrong while inserting data',
+    )
+    console.error(err)
+    throw err
+  }
+}
+
+export async function getPostData(grid_post_path_id: string) {
+  try {
+    const result = await conn`
+      SELECT * FROM json_posts WHERE grid_post_path_id = ${grid_post_path_id}
+    `
+    console.log('> ✔️ [Database | getPostData]: data retrieved!')
+    return result
+  } catch (err) {
+    console.log(
+      '\n> ❌ [Database | getPostData]: something goes wrong while inserting data',
     )
     console.error(err)
     throw err

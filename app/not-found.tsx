@@ -1,8 +1,5 @@
-// import { Redirect } from "next"
+import { redirect } from 'next/navigation'
+
 export default function NotFound() {
-  return (
-    <main className='flex justify-center items-center min-h-screen'>
-      <h1>Not found lol</h1>
-    </main>
-  )
+  redirect('/?error=notfound')
 }

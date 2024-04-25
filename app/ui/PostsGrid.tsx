@@ -12,11 +12,11 @@ export default function PostsGrid({ gridPosts }: { gridPosts: IPost[] }) {
         <PostCard
           title={post.title}
           description={post.description}
-          publishedIn={dayjs((new Date(post.publication_date).getTime())).fromNow()}
+          publication_date={dayjs((new Date(post.publication_date).getTime())).fromNow()}
           tags={post.tags}
           href={`/post/${post.path_id}`}
           recent={post.recent}
-          bannerUrl={post.bannerUrl}
+          bannerUrl={post.bannerUrl ?? ''}
           // recent={true}
           key={i}
         />

@@ -39,7 +39,8 @@ function PostCard({
             </span>
           )}
           <Image
-            src={bannerUrl ?? ''}
+            // src={bannerUrl ?? ''}
+            src='/post_card_banner.jpg'
             height={48}
             width={288}
             style={{
