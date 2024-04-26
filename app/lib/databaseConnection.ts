@@ -130,7 +130,7 @@ export async function insertGridPostData(data: IPost) {
 export async function insertJsonPostData(
   data: IPostData,
   grid_post_id: number,
-  grid_post_path_id: string
+  grid_post_path_id: string,
 ) {
   try {
     await conn`
@@ -158,7 +158,23 @@ export async function getPostData(grid_post_path_id: string) {
     return result
   } catch (err) {
     console.log(
-      '\n> ❌ [Database | getPostData]: something goes wrong while inserting data',
+      '\n> ❌ [Database | getPostData]: something goes wrong while fetching post data',
+    )
+    console.error(err)
+    throw err
+  }
+}
+
+export async function getAdminTokens() {
+  try {
+    const result = await conn`
+      SELECT * FROM admin_credentials WHERE id = 1
+    `
+    console.log('> ✔️ [Database | getAdminTokens]: hashes retrieved!')
+    return result
+  } catch (err) {
+    console.log(
+      '\n> ❌ [Database | getAdminTokens]: something goes wrong while fetching admin tokens',
     )
     console.error(err)
     throw err

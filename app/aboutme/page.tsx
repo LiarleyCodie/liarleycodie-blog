@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import lyiarLogo from '@/app/ui/images/liarleycodie-logo.svg'
+import { ChatCircleText } from '@phosphor-icons/react/dist/ssr'
 
 export default async function Aboutme() {
   return (
@@ -36,7 +37,7 @@ export default async function Aboutme() {
         </strong>
         .
       </p>
-      <div className='flex flex-col justify-center items-center'>
+      <div className="flex flex-col justify-center items-center">
         <Image
           className="my-6 dark:filter-none invert"
           src={lyiarLogo}
@@ -48,9 +49,10 @@ export default async function Aboutme() {
         <p>Do you want to contact me?</p>
         <a
           href="/contactme"
-          className="bg-gray-900 border hover:text-indigo-300 border-gray-800 text-sm text-gray-300 hover:bg-gray-800 hover:border-indigo-500 flex justify-center items-center py-2 px-4 mt-1 rounded-md"
+          className="bg-gray-300 active:bg-gray-200 duration-200 cursor-pointer dark:active:bg-gray-950 border-gray-400 dark:bg-gray-900 border hover:text-indigo-600 text-gray-600 dark:hover:text-indigo-300 dark:border-gray-800 text-sm dark:text-gray-400 dark:hover:bg-gray-800 hover:border-indigo-600 dark:hover:border-indigo-500 flex gap-2 justify-center items-center py-2 px-4 rounded-md mt-1"
         >
           Send me a message
+          <ChatCircleText size={22} />
         </a>
       </div>
     </main>

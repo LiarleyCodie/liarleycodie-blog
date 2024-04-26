@@ -15,7 +15,7 @@ export default function SearchBar() {
     <form
       action="/"
       method="get"
-      className="border focus-within:border-gray-200 focus-within:outline-gray-200/30 outline outline-4 outline-gray-200/0 border-gray-400 bg-gray-200/5 rounded-full flex w-full max-w-xl duration-200"
+      className="border focus-within:bg-transparent focus-within:border-gray-200 focus-within:outline-gray-200/20 outline outline-4 outline-gray-200/0 border-gray-400 bg-gray-200/5 rounded-full flex w-full max-w-xl duration-200"
     >
       <input
         type="search"
