@@ -7,6 +7,9 @@ import Image from 'next/image'
 import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr'
 import { IPost } from './definitions/PostCard'
 import Notification from './ui/Notification'
+import jwt from 'jsonwebtoken'
+import { cookies } from 'next/headers'
+import 'dotenv/config'
 
 // ! FIX: improve the database response caching
 
@@ -15,10 +18,40 @@ interface IHomeProps {
     searchParams: { [id: string]: string }
 }
 
+export const verifyJWT = (token: any, currentPage: string = 'page') => {
+    const { JWT_SECRET } = process.env
+
+    if (JWT_SECRET) {
+        try {
+            const decoded = jwt.verify(token, JWT_SECRET) as {
+                isAdmin: boolean
+            }
+
+            if (decoded && decoded?.isAdmin) {
+                return true
+            }
+            return false
+        } catch (err) {
+            console.log(
+                `\n> ❌ [${currentPage} | verifyJWT]: Error verifying JWT token`,
+            )
+            console.error(err)
+            return false
+        }
+    } else {
+        console.log(
+            `\n> ❌ [${currentPage} | verifyJWT]: JWT_SECRET is undefined`,
+        )
+        console.error({ message: 'JWT_SECRET is undefined' })
+        return false
+    }
+}
+
 export default async function Home({ searchParams }: IHomeProps) {
     const { page, search, error } = searchParams
     let count: number
     let gridPosts: IPost[] | any
+    let isAdmin = false
 
     if (search) {
         const term = DOMPurify.sanitize(search ?? '')
@@ -30,6 +63,13 @@ export default async function Home({ searchParams }: IHomeProps) {
         count = await getTotalPages()
     }
 
+    const authCookie = cookies().get('auth')
+
+    if (authCookie) {
+        isAdmin = verifyJWT(authCookie?.value, '/')
+    }
+    
+    console.log('admin mode:', isAdmin)
     return (
         <main className="min-h-screen items-center gap-16 flex flex-col pb-16 bg-gray-200 dark:bg-gray-950">
             {/* heading */}

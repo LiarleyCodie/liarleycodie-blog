@@ -170,8 +170,8 @@ export default async function Seed() {
       tags: ['Cake', 'Kitchen', 'Bakery', 'Sweet']
   }
 
-  const { id, path_id } = await (await insertGridPostData(post)).postId[0]
-  await insertJsonPostData(postData, id, path_id)
+  // const { id, path_id } = await (await insertGridPostData(post)).postId[0]
+  // await insertJsonPostData(postData, id, path_id)
 
   return (
     <main className="min-h-screen flex justify-center items-center bg-gray-200 text-gray-700 dark:bg-gray-950 dark:text-gray-300">
