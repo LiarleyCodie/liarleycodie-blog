@@ -1,12 +1,12 @@
 import { SignIn } from '@phosphor-icons/react/dist/ssr'
 import DOMPurify from 'isomorphic-dompurify'
 import bcrypt from 'bcrypt'
-import { getAdminTokens } from '../lib/databaseConnection'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 import { v4 as uuidv4 } from 'uuid'
+import { getAdminHashes } from '../lib/prismaDb'
 
 export default function Admin() {
     async function Auth(formData: FormData) {
@@ -83,7 +83,8 @@ export default function Admin() {
             sanitizedFormData.password2,
         )
 
-        const { hash1, hash2 } = Array.from(await getAdminTokens())[0]
+        const hashes = await getAdminHashes()
+        const { hash1, hash2 } = hashes[0]
 
         const password1IsValid = await compareHashedPassword(
             sanitizedFormData.password1,
@@ -125,12 +126,11 @@ export default function Admin() {
                                 resolve(token)
                             },
                         )
-                    }
-                    else {
+                    } else {
                         console.error(
                             '> ❌ [/Admin | generateJWT]: JWT_SECRET is undefined',
                         )
-                        reject({ message: 'JWT_SECRET is undefined'})
+                        reject({ message: 'JWT_SECRET is undefined' })
                     }
                 })
             }
@@ -145,28 +145,28 @@ export default function Admin() {
                 path: '/',
             })
 
-            console.log('You can loggin!')
+            redirect('/')
         }
     }
+
 
     return (
         <main className="min-h-screen flex flex-col justify-center items-center bg-gray-200 text-gray-700 dark:bg-gray-950 dark:text-gray-300 px-2">
             <form
                 action={Auth}
-                method="POST"
                 className="flex flex-col gap-4 w-full max-w-96"
             >
                 <input
                     autoComplete="false"
                     className="outline focus-within:bg-gray-200 outline-4 outline-transparent dark:focus-within:bg-gray-950 focus-within:outline-indigo-500/20 duration-200 focus-within:border-indigo-500 dark:bg-gray-900 bg-gray-300 text-sm text-gray-800 dark:text-gray-300 dark:placeholder:text-gray-600 placeholder:text-gray-500 py-2 px-4 border w-full border-gray-400 dark:border-gray-800 rounded-md"
-                    type="text"
+                    type="password"
                     placeholder="password 1"
                     name="password1"
                 />
                 <input
                     autoComplete="false"
                     className="outline focus-within:bg-gray-200 outline-4 outline-transparent dark:focus-within:bg-gray-950 focus-within:outline-indigo-500/20 duration-200 focus-within:border-indigo-500 dark:bg-gray-900 bg-gray-300 text-sm text-gray-800 dark:text-gray-300 dark:placeholder:text-gray-600 placeholder:text-gray-500 py-2 px-4 w-full border border-gray-400 dark:border-gray-800 rounded-md"
-                    type="text"
+                    type="password"
                     placeholder="password 2"
                     name="password2"
                 />

@@ -8,7 +8,7 @@ import dayjs from 'dayjs'
 
 import { redirect } from 'next/navigation'
 import { IPostData } from '@/app/definitions/PostPage'
-import { getPostData, getPostTitle } from '@/app/lib/databaseConnection'
+import { getPostTitle, getPostData } from '@/app/lib/prismaDb' 
 
 interface IProps {
     params: { id: string }
@@ -16,11 +16,11 @@ interface IProps {
 }
 
 export async function generateMetadata({ params }: IProps) {
-    const data = Array.from(await getPostTitle(params.id))[0]
+    const title = await getPostTitle(params.id)
 
-    if (data) {
+    if (title) {
         return {
-            title: data.post_title + ' | LiarleyCodie',
+            title: title + ' | LiarleyCodie',
         }
     } else {
         return redirect('/?error=notfound')
@@ -28,10 +28,10 @@ export async function generateMetadata({ params }: IProps) {
 }
 
 export default async function Post({ params }: IProps) {
-    const data = Array.from(await getPostData(params.id))[0]
+    const data = await getPostData(params.id)
 
     if (data) {
-        const postData: IPostData = JSON.parse(data?.post_data)
+        const postData: IPostData = JSON.parse(String(data))
         return (
             <main className="flex flex-col items-center min-h-screen bg-gray-200 dark:bg-gray-950 text-gray-700 dark:text-gray-400">
                 <PostBanner
