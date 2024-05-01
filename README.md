@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# LiarleyCodie Personal Blog
 
-## Getting Started
+This blog is being completely built with:
+- `NextJS`: 14.2.1
+- `ReactJS`: 18
+- `Isomorphic-dompurify`: 2.7
+- `Dayjs`: 1.11.10
+- `Tailwind`: 3.4.1
+- `Typescript`: 5
+- `Next-Themes`: 0.3
+- `Uuid`: 9.0.1
+- `Clsx`: 2.1.1
+- `Phosphoricons`: 2.1.5-alpha.3
+- `Prisma`: 5.13
+- `Bcrypt`: 5.1.1
+- `jsonwebtoken`: 9.0.2
 
-First, run the development server:
+I used the `pnpm` as package manager.
 
+After cloning the project, for start, install the dependencies with (run just one of the commands):
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  pnpm install
+```
+> If you don't have the **pnpm** installed, but you have the nodejs, run `npm run install` instead.
+
+After having all the dependencies installed, use (to start in the dev environment):
+```bash
+  pnpm dev
+```
+or (to start the production version locally):
+```bash
+  pnpm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Likewise, if you don't the **pnpm** installed, but have the nodejs, you can use `npm run dev` or `npm run start`.
+> It is worth remembering that in order for you to be able to execute the production version, you need to "build" the project first.
+> To do this run `pnpm build` or `npm run build`. After the build completed, you can then finally run the `start`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+For more details about the development, there is a blog post (or there will be) explaining with more details the process.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+> 😵 Please, sorry for my _not so corrent_ english. I'm still working on it 😊
